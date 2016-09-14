@@ -1,5 +1,7 @@
+import CVXcanon
 import numpy as np
 import matplotlib.pyplot as plt
+import cvxpy
 from cvxpy import *
 
 tau1 = 0.13
@@ -35,8 +37,7 @@ h8 = 0 # mood
 h9 = 0 # altruistic tendencies
 
 # initial states at time = 0    
-x_0 = np.vector[(z1, z2, z3, z4, z5, z6, z7, z8, z33, z77,\
-	h1, h2, h3, h4, h5, h6, h7, h8, h9)]       
+x_0 = np.array([z1, z2, z3, z4, z5, z6, z7, z8, z33, z77, h1, h2, h3, h4, h5, h6, h7, h8, h9])      
 
 # inflow resistance
 g11 = 0.1
@@ -64,6 +65,7 @@ b42 = 1   # b42 <= 1
 b43 = 1   # b43 <= 1
 b54 = 0.1  # b54 <= 1
 b25 = 0.1
+b31 = 0.1 # b31 <= 1
 b85 = 0.1  # b25 + b85 <= 1
 b46 = .1  # b46 <= 1
 b47 = .9
@@ -117,7 +119,7 @@ n = 17 # number of states
 m = 3 # number of controllable inputs
 T = 52 # number of weeks being considered 
 
-x = Variable(n.T+1) # matrix of non-controllable inputs and states (tank heights)
+x = Variable(n,T+1) # matrix of non-controllable inputs and states (tank heights)
 u = Variable(m, T)  # matrix of life-coaching inputs
    
 #/ tau ####### ********
